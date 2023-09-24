@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, DragEvent, ChangeEvent } from 'react';
+import React, { useState, useRef, DragEvent, ChangeEvent, FormEvent } from 'react';
 
 export default function FileUpload() {
   const [dragging, setDragging] = useState<boolean>(false);
@@ -36,8 +36,23 @@ export default function FileUpload() {
     fileInputRef.current?.click();
   };
 
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!file) return
+    try {
+      const data = new FormData()
+      data.set('file', file)
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: data
+      })
+    } catch (e: any) {
+      console.error(e)
+    }
+  };
+
   return (
-    <div className="max-w-xs mx-auto py-4">
+    <form className="max-w-xs mx-auto mt-4" onSubmit={onSubmit}>
       <div
         className={`p-5 border-2 rounded-lg text-center cursor-pointer transition-all ease-in-out duration-300 ${dragging ? 'border-blue-500' : 'border-gray-300'
           }`}
@@ -55,7 +70,9 @@ export default function FileUpload() {
         onChange={onFileChange}
       />
       {file && <p className="mt-3 text-gray-700">Selected file: {file.name}</p>}
-    </div>
+      <button type="submit" className="mt-3 px-4 py-2 bg-blue-500 text-white rounded">
+        Upload
+      </button>
+    </form>
   );
 }
-

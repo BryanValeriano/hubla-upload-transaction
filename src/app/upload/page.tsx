@@ -1,7 +1,7 @@
-import FileBrowser from "../_components/FileBrowser";
+import FileUpload from "../_components/FileUpload";
 
 export default function Upload() {
   return (
-    <FileBrowser />
+    <FileUpload />
   );
 }
