@@ -6,6 +6,7 @@ export default function FileUpload() {
   const [dragging, setDragging] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
 
   const onDragOver = (event: DragEvent<HTMLDivElement>): void => {
     event.preventDefault();
@@ -36,18 +37,30 @@ export default function FileUpload() {
     fileInputRef.current?.click();
   };
 
+
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!file) return
+    if (!file) return;
+
     try {
-      const data = new FormData()
-      data.set('file', file)
-      const res = await fetch('/api/upload', {
+      setUploadState('uploading');
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload', {
         method: 'POST',
-        body: data
-      })
-    } catch (e: any) {
-      console.error(e)
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      setUploadState('success');
+    } catch (error) {
+      console.error(error);
+      setUploadState('error');
     }
   };
 
@@ -73,6 +86,11 @@ export default function FileUpload() {
       <button type="submit" className="mt-3 px-4 py-2 bg-blue-500 text-white rounded">
         Upload
       </button>
+      <div>
+        {uploadState === 'uploading' && <p>Uploading...</p>}
+        {uploadState === 'success' && <p>Upload Successful!</p>}
+        {uploadState === 'error' && <p>Upload Failed. Please try again.</p>}
+      </div>
     </form>
   );
 }
