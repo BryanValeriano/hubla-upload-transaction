@@ -4,7 +4,7 @@ export default class Transaction {
   public date: string;
   public productDescription: string;
   public value: number;
-  public userName: string;
+  public transactionOwnerName: string;
 
   constructor(transaction: TransactionConstructor) {
     this.id = transaction.id;
@@ -12,7 +12,7 @@ export default class Transaction {
     this.date = transaction.date;
     this.productDescription = transaction.productDescription;
     this.value = transaction.value;
-    this.userName = transaction.userName;
+    this.transactionOwnerName = transaction.transactionOwnerName;
   }
 }
 
@@ -22,5 +22,5 @@ type TransactionConstructor = {
   date: string;
   productDescription: string;
   value: number;
-  userName: string;
+  transactionOwnerName: string;
 }

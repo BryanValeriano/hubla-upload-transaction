@@ -11,6 +11,7 @@
   ],
   "root": true,
   "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
     "import/no-restricted-paths": [
       "error",
       {
