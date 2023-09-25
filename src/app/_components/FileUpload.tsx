@@ -8,6 +8,15 @@ export default function FileUpload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
 
+  const getBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const onDragOver = (event: DragEvent<HTMLDivElement>): void => {
     event.preventDefault();
     setDragging(true);
@@ -37,7 +46,6 @@ export default function FileUpload() {
     fileInputRef.current?.click();
   };
 
-
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!file) return;
@@ -45,12 +53,14 @@ export default function FileUpload() {
     try {
       setUploadState('uploading');
 
-      const formData = new FormData();
-      formData.append('file', file);
+      const base64File = await getBase64(file);
 
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ file: base64File, fileName: file.name }),
       });
 
       if (!response.ok) {
