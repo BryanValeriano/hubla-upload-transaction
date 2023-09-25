@@ -2,5 +2,63 @@
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended"
-  ]
+  ],
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          {
+            "target": "./src/app",
+            "from": "./src/server",
+            "message": "Do not import server side logic to frontend pages"
+          },
+          {
+            "target": "./src/app",
+            "from": "./src/app/api",
+            "message": "Do not import API logic to frontend pages"
+          },
+          {
+            "target": "./src/app/api",
+            "from": "./src/client",
+            "message": "Do not import client logic to API"
+          },
+          {
+            "target": "./src/app/api",
+            "from": "./src/app",
+            "except": [
+              "./src/app/api"
+            ],
+            "message": "Do not import frontend pages to API"
+          },
+          {
+            "target": "./src/client",
+            "from": "./src/server",
+            "message": "Do not import server side logic to client"
+          },
+          {
+            "target": "./src/client",
+            "from": "./src/app/api",
+            "message": "Do not import API logic to client"
+          },
+          {
+            "target": "./src/server",
+            "from": "./src/client",
+            "message": "Do not import client logic to server"
+          },
+          {
+            "target": "./src/server",
+            "from": "./src/app",
+            "except": [
+              "./src/app/api"
+            ],
+            "message": "Do not import client logic to server"
+          }
+        ]
+      }
+    ]
+  }
 }
