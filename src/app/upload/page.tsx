@@ -1,4 +1,4 @@
-import FileUpload from "../_components/FileUpload";
+import FileUpload from "@/components/FileUpload";
 
 export default function Upload() {
   return (
