@@ -1,11 +1,15 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
   "plugins": [
+    "@typescript-eslint",
     "import"
   ],
+  "root": true,
   "rules": {
     "import/no-restricted-paths": [
       "error",

@@ -1,4 +1,7 @@
+import Transaction from "../entities/Transaction";
+
 export default interface ITransactionRepository {
-  save(transaction: any): Promise<void>
+  insert(transaction: Transaction): Promise<void>
+  getAll(): Promise<Transaction[]>
 }
 
