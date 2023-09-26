@@ -1,11 +1,18 @@
+import Transaction from "@/server/entities/Transaction";
+import ITransactionRepository from "@/server/repositories/ITransactionRepository";
 import { v4 as uuid } from "uuid";
-import Transaction from "../entities/Transaction";
-import ITransactionRepository from "../repositories/ITransactionRepository";
 
+type Dependencies = {
+  transactionRepository: ITransactionRepository;
+}
 type Input = Omit<Transaction, 'id'>
 
 export default class CreateTransactionService {
-  constructor(private transactionRepository: ITransactionRepository) { }
+  private transactionRepository: ITransactionRepository;
+
+  constructor({ transactionRepository }: Dependencies) {
+    this.transactionRepository = transactionRepository;
+  }
 
   async execute({ type, date, productDescription, value, transactionOwnerName }: Input) {
     const id = uuid()
