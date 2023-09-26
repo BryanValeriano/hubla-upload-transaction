@@ -76,12 +76,13 @@ export default function FileUpload() {
       if (!response.ok) {
         const data = await response.json();
         setErrors(data.errors || ['Upload failed']);
+        setUploadState('error');
       } else {
         const data = await response.json();
         setTransactions(data.transactions || []);
+        setUploadState('success');
       }
 
-      setUploadState('success');
     } catch (error) {
       console.error(error);
       setUploadState('error');
