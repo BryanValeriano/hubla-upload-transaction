@@ -1,3 +1,4 @@
+import Base64toTransactionParser from '@/server/parser/base64toTransactionParser';
 import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -18,8 +19,13 @@ export async function POST(request: NextRequest) {
 
     const buffer = Buffer.from(base64Content, 'base64');
 
-    // Debugging: Log the size of the buffer
     console.log('Buffer size:', buffer.length);
+
+    console.log("parsing...");
+    const parser = new Base64toTransactionParser();
+    parser.parse(base64Content);
+    console.log("done!");
+
 
     const path = `/tmp/${data.fileName || 'uploadedFile'}`;
     await writeFile(path, buffer);
