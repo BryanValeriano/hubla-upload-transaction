@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "node:path";
 const databasePath = path.join(__dirname, "./transactions.json");
 
-class TransactionRepositoryJSON implements ITransactionRepository {
+export default class TransactionRepositoryJSON implements ITransactionRepository {
   async insert(transaction: Transaction): Promise<void> {
     const transactions = this.getTransactionsFromFile();
     transactions.push(transaction);
