@@ -1,12 +1,18 @@
 "use client";
 
+import Transaction from '@/server/entities/Transaction';
 import React, { useState, useRef, DragEvent, ChangeEvent, FormEvent } from 'react';
+import ErrorParserList from './ErrorParserList';
+import TransactionList from './TransactionList';
 
 export default function FileUpload() {
   const [dragging, setDragging] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+
+  const [transactions, setTransactions] = useState<Omit<Transaction, "id">[]>([]); // Substitua por seu tipo de transação real
+  const [errors, setErrors] = useState<string[]>([]);
 
   const getBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -50,6 +56,10 @@ export default function FileUpload() {
     event.preventDefault();
     if (!file) return;
 
+    setUploadState('idle');
+    setErrors([]);
+    setTransactions([]);
+
     try {
       setUploadState('uploading');
 
@@ -64,7 +74,11 @@ export default function FileUpload() {
       });
 
       if (!response.ok) {
-        throw new Error('Upload failed');
+        const data = await response.json();
+        setErrors(data.errors || ['Upload failed']);
+      } else {
+        const data = await response.json();
+        setTransactions(data.transactions || []);
       }
 
       setUploadState('success');
@@ -100,6 +114,10 @@ export default function FileUpload() {
         {uploadState === 'uploading' && <p>Uploading...</p>}
         {uploadState === 'success' && <p>Upload Successful!</p>}
         {uploadState === 'error' && <p>Upload Failed. Please try again.</p>}
+      </div>
+      <div>
+        {errors.length > 0 && <ErrorParserList errors={errors} />}
+        {transactions.length > 0 && <TransactionList transactions={transactions} />}
       </div>
     </form>
   );
