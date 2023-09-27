@@ -1,9 +1,10 @@
 import { Buffer } from 'buffer';
 import Transaction from '../entities/Transaction';
+import IFileTransactionParser from './IFileTransactionParser';
 
 type Output = Omit<Transaction, "id">
 
-export default class Base64toTransactionParser {
+export default class Base64toTransactionParser implements IFileTransactionParser {
 
   private parseLine(line: string, index: number, errors: string[]): Output | null {
     if (line.length > 86) {

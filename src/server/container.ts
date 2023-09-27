@@ -1,12 +1,12 @@
 import ITransactionRepository from "./repositories/ITransactionRepository";
-import TransactionRepositoryInMemory from "./repositories/in-memory/transactionRepositoryInMemory";
+import TransactionRepositoryJSON from "./repositories/json/transactionRepositoryJSON";
 
 interface Container {
   transactionRepository: ITransactionRepository
 }
 
 const dev: Container = {
-  transactionRepository: new TransactionRepositoryInMemory()
+  transactionRepository: new TransactionRepositoryJSON()
 }
 
 export function container(): Container {
