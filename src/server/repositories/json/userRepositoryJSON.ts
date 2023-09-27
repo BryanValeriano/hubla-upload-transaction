@@ -15,7 +15,7 @@ export default class UserRepositoryJSON implements IUserRepository {
 
   constructor() {
     fs.readFile(this.filePath, (err) => {
-      console.error("Error on loading JSON database")
+      console.error("Error on loading JSON database", err)
     })
   }
 
