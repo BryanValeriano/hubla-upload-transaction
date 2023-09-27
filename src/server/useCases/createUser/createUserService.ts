@@ -15,6 +15,12 @@ export default class CreateUserService {
   }
 
   async execute({ userName }: Input) {
+    const existingUser = await this.userRepository.getByName(userName)
+
+    if (existingUser) {
+      return;
+    }
+
     const user = new User({
       balance: 0,
       userName
