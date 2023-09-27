@@ -1,5 +1,7 @@
+import { container } from '@/server/container';
+import UploadTransactionFileController from '@/server/controllers/UploadTransactionFileController';
+import IFileTransactionParser from '@/server/parser/IFileTransactionParser';
 import Base64toTransactionParser from '@/server/parser/base64toTransactionParser';
-import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -16,15 +18,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Invalid file format' }, { status: 400 });
     }
 
-    //const buffer = Buffer.from(base64Content, 'base64');
-    //const path = `/tmp/${data.fileName || 'uploadedFile'}`;
-    //await writeFile(path, buffer);
-    //console.log(`open ${path} to see the uploaded file`);
-
-    console.log("parsing...");
-    const parser = new Base64toTransactionParser();
-    const { transactions, errors } = parser.parse(base64Content);
-    console.log("done!");
+    const parser = new Base64toTransactionParser() as IFileTransactionParser;
+    const { transactionRepository } = container();
+    const uploadTransactionFileController = new UploadTransactionFileController({ parser, transactionRepository });
+    const { transactions, errors } = uploadTransactionFileController.execute(base64Content);
 
     if (errors.length > 0) {
       return NextResponse.json({ success: false, errors }, { status: 400 });
