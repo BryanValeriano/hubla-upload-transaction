@@ -8,9 +8,9 @@ export default class User {
   public balance: number;
 
 
-  constructor(User: UserConstructor) {
-    this.userName = User.userName;
-    this.balance = User.balance;
+  constructor(user: UserConstructor) {
+    this.userName = user.userName;
+    this.balance = user.balance;
   }
 }
 
