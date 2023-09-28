@@ -15,7 +15,6 @@ export default class GetUserByNameService {
   }
 
   public execute(userName: string) {
-    console.log(this.userRepository);
     const user = this.userRepository.getByName(userName);
     return user;
   }

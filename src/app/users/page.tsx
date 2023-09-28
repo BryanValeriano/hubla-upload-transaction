@@ -16,7 +16,6 @@ async function getData() {
 
 export default async function Users() {
   const data = await getData();
-  console.log(data);
   const users = data.users;
   return <UserList users={users} />
 }

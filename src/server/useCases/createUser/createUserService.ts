@@ -22,8 +22,6 @@ export default class CreateUserService {
   public execute({ userName }: Input): User {
     const existingUser = this.getUserByNameService.execute(userName)
 
-    console.log(userName, " existingUser: ", existingUser);
-
     if (existingUser) {
       return existingUser;
     }

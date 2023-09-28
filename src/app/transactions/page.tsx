@@ -16,7 +16,6 @@ async function getData() {
 
 export default async function Transactions() {
   const data = await getData();
-  console.log(data);
   const transactions = data.transactions;
   return <TransactionList transactions={transactions} />
 }

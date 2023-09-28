@@ -70,7 +70,7 @@ export default class Base64toTransactionParser implements IFileTransactionParser
       const transactions = this.parseContent(decodedContent, errors);
       return { transactions, errors };
     } catch (err) {
-      console.log('Error parsing the file: ', err);
+      console.error('Error parsing the file: ', err);
       return { transactions: [], errors: ['Error decoding the file'] };
     }
   }
