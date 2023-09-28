@@ -14,13 +14,17 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
   );
 
   constructor() {
-    fs.readFile(this.filePath, (err) => {
-      console.error("Error on loading JSON database", err)
+    fs.readFile(this.filePath, (error) => {
+      console.error(`Error reading the file ${this.filePath}:`, error)
     })
   }
 
   private async saveToFile(transactions: Transaction[]) {
-    fs.writeFileSync(this.filePath, JSON.stringify(transactions));
+    try {
+      fs.writeFileSync(this.filePath, JSON.stringify(transactions));
+    } catch (error) {
+      console.error(`Error writing to file ${this.filePath}:`, error); // Log any errors during the write operation
+    }
   }
 
   async clear(): Promise<void> {
@@ -38,10 +42,19 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
   }
 
   private getTransactionsFromFile(): Transaction[] {
-    const transactions: Transaction[] = JSON.parse(fs.readFileSync(
-      this.filePath,
-      'utf8',
-    ));
+    let transactions: Transaction[] = [];
+
+    try {
+      const data = fs.readFileSync(this.filePath, 'utf8');
+      if (data) {
+        transactions = JSON.parse(data);
+      } else {
+        console.error(`File ${this.filePath} is empty.`);
+      }
+    } catch (error) {
+      console.error(`Error reading or parsing file ${this.filePath}:`, error);
+    }
+
     return transactions.map((transaction) => new Transaction({ ...transaction }));
   }
 }

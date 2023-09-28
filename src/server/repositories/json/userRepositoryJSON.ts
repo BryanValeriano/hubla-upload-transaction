@@ -10,17 +10,21 @@ export default class UserRepositoryJSON implements IUserRepository {
     'repositories',
     'json',
     'files',
-    "Users.json"
+    "users.json"
   );
 
   constructor() {
-    fs.readFile(this.filePath, (err) => {
-      console.error("Error on loading JSON database", err)
+    fs.readFile(this.filePath, (error) => {
+      console.error(`Error reading the file ${this.filePath}:`, error)
     })
   }
 
-  private async saveToFile(Users: User[]) {
-    fs.writeFileSync(this.filePath, JSON.stringify(Users));
+  private saveToFile(users: User[]) {
+    try {
+      fs.writeFileSync(this.filePath, JSON.stringify(users));
+    } catch (error) {
+      console.error(`Error writing to file ${this.filePath}:`, error); // Log any errors during the write operation
+    }
   }
 
   async clear(): Promise<void> {
@@ -44,17 +48,29 @@ export default class UserRepositoryJSON implements IUserRepository {
     this.saveToFile(users);
   }
 
+  async getAll(): Promise<User[]> {
+    const users = this.getUsersFromFile();
+    return [...users];
+  }
+
   async getByName(userName: string): Promise<User | undefined> {
     const users = this.getUsersFromFile();
     return users.find((user) => user.userName == userName);
   }
 
   private getUsersFromFile(): User[] {
-    const Users: User[] = JSON.parse(fs.readFileSync(
-      this.filePath,
-      'utf8',
-    ));
+    let users: User[] = [];
+    try {
+      const data = fs.readFileSync(this.filePath, 'utf8');
+      if (data) {
+        users = JSON.parse(data);
+      } else {
+        console.error(`File ${this.filePath} is empty.`);
+      }
+    } catch (error) {
+      console.error(`Error reading or parsing file ${this.filePath}:`, error);
+    }
 
-    return Users.map((user) => new User({ ...user }));
+    return users.map((user) => new User({ ...user }));
   }
 }
