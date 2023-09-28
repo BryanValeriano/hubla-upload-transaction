@@ -27,10 +27,21 @@ export default class UserRepositoryJSON implements IUserRepository {
     await this.saveToFile([])
   }
 
-  async insert(User: User): Promise<void> {
-    const Users = this.getUsersFromFile();
-    Users.push(User);
-    this.saveToFile(Users);
+  async insert(user: User): Promise<void> {
+    const users = this.getUsersFromFile();
+    users.push(user);
+    this.saveToFile(users);
+  }
+
+  async updateBalance(user: User): Promise<User | void> {
+    const users = this.getUsersFromFile();
+    users.forEach((oldUser) => {
+      if (oldUser.userName == user.userName) {
+        oldUser.balance = user.balance;
+        return oldUser;
+      }
+    })
+    this.saveToFile(users);
   }
 
   async getByName(userName: string): Promise<User | undefined> {
