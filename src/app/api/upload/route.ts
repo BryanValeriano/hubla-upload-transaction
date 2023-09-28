@@ -20,7 +20,8 @@ export async function POST(request: NextRequest) {
 
     const parser = new Base64toTransactionParser() as IFileTransactionParser;
     const { transactionRepository } = container();
-    const uploadTransactionFileController = new UploadTransactionFileController({ parser, transactionRepository });
+    const { userRepository } = container();
+    const uploadTransactionFileController = new UploadTransactionFileController({ parser, transactionRepository, userRepository });
     const { transactions, errors } = uploadTransactionFileController.execute(base64Content);
 
     if (errors.length > 0) {
