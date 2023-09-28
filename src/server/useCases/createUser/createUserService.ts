@@ -19,8 +19,10 @@ export default class CreateUserService {
     });
   }
 
-  async execute({ userName }: Input): Promise<User> {
-    const existingUser = await this.getUserByNameService.execute(userName)
+  public execute({ userName }: Input): User {
+    const existingUser = this.getUserByNameService.execute(userName)
+
+    console.log(userName, " existingUser: ", existingUser);
 
     if (existingUser) {
       return existingUser;
@@ -31,7 +33,7 @@ export default class CreateUserService {
       userName
     })
 
-    await this.userRepository.insert(user);
+    this.userRepository.insert(user);
     return user;
   }
 }

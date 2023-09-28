@@ -11,8 +11,8 @@ export default class GetTransactionsService {
     this.transactionRepository = transactionRepository;
   }
 
-  async execute() {
-    const transactions = await this.transactionRepository.getAll();
+  public execute() {
+    const transactions = this.transactionRepository.getAll();
     return transactions;
   }
 }

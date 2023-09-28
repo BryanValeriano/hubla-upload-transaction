@@ -23,9 +23,9 @@ export default class ProcessTransactionService {
     this.updateUserBalanceService = new UpdateUserBalanceService({ userRepository })
   }
 
-  async execute(input: Input) {
-    const transaction = await this.createTransactionService.execute(input);
-    const user = await this.createUserService.execute({ userName: input.transactionOwnerName });
+  public execute(input: Input) {
+    const transaction = this.createTransactionService.execute(input);
+    const user = this.createUserService.execute({ userName: input.transactionOwnerName });
     user.balance += (transaction.type == TransactionType.RECEIVED_MONEY ? 1 : -1) * transaction.value;
     this.updateUserBalanceService.execute(user);
     return transaction;

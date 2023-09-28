@@ -21,15 +21,15 @@ describe("Update User Balance Service", () => {
     const userName = "teste"
     const balance = Math.random();
 
-    await createUserService.execute({
+    createUserService.execute({
       userName: userName
     })
-    await updateUserBalanceService.execute({
+    updateUserBalanceService.execute({
       userName,
       balance,
     })
 
-    const user = await getUserByNameService.execute(userName);
+    const user = getUserByNameService.execute(userName);
 
     expect(user).not.toBe(undefined);
     expect(user?.userName).toBe(userName);

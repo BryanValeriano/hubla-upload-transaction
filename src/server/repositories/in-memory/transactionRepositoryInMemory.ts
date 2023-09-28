@@ -4,11 +4,11 @@ import ITransactionRepository from "../ITransactionRepository";
 export default class TransactionRepositoryInMemory implements ITransactionRepository {
   private transactions: Transaction[] = [];
 
-  async insert(transaction: Transaction): Promise<void> {
+  insert(transaction: Transaction): void {
     this.transactions.push(transaction);
   }
 
-  async getAll(): Promise<Transaction[]> {
+  getAll(): Transaction[] {
     return [...this.transactions];
   }
 }

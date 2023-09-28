@@ -19,7 +19,7 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
     })
   }
 
-  private async saveToFile(transactions: Transaction[]) {
+  private saveToFile(transactions: Transaction[]) {
     try {
       fs.writeFileSync(this.filePath, JSON.stringify(transactions));
     } catch (error) {
@@ -27,17 +27,17 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
     }
   }
 
-  async clear(): Promise<void> {
-    await this.saveToFile([])
+  clear(): void {
+    this.saveToFile([])
   }
 
-  async insert(transaction: Transaction): Promise<void> {
+  public insert(transaction: Transaction): void {
     const transactions = this.getTransactionsFromFile();
     transactions.push(transaction);
     this.saveToFile(transactions);
   }
 
-  async getAll(): Promise<Transaction[]> {
+  public getAll(): Transaction[] {
     return [...this.getTransactionsFromFile()];
   }
 

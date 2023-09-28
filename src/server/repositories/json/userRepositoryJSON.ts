@@ -27,17 +27,17 @@ export default class UserRepositoryJSON implements IUserRepository {
     }
   }
 
-  async clear(): Promise<void> {
-    await this.saveToFile([])
+  public clear(): void {
+    this.saveToFile([])
   }
 
-  async insert(user: User): Promise<void> {
+  public insert(user: User): void {
     const users = this.getUsersFromFile();
     users.push(user);
     this.saveToFile(users);
   }
 
-  async updateBalance(user: User): Promise<User | void> {
+  public updateBalance(user: User): User | void {
     const users = this.getUsersFromFile();
     users.forEach((oldUser) => {
       if (oldUser.userName == user.userName) {
@@ -48,17 +48,17 @@ export default class UserRepositoryJSON implements IUserRepository {
     this.saveToFile(users);
   }
 
-  async getAll(): Promise<User[]> {
+  public getAll(): User[] {
     const users = this.getUsersFromFile();
     return [...users];
   }
 
-  async getByName(userName: string): Promise<User | undefined> {
+  public getByName(userName: string): User | undefined {
     const users = this.getUsersFromFile();
     return users.find((user) => user.userName == userName);
   }
 
-  private getUsersFromFile(): User[] {
+  public getUsersFromFile(): User[] {
     let users: User[] = [];
     try {
       const data = fs.readFileSync(this.filePath, 'utf8');

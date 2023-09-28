@@ -11,8 +11,8 @@ export default class GetUsersService {
     this.userRepository = userRepository;
   }
 
-  async execute() {
-    const Users = await this.userRepository.getAll();
+  public execute() {
+    const Users = this.userRepository.getAll();
     return Users;
   }
 }

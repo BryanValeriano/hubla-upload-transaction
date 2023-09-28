@@ -14,9 +14,9 @@ export default class GetUserByNameService {
     this.userRepository = userRepository;
   }
 
-  async execute(userName: string) {
+  public execute(userName: string) {
     console.log(this.userRepository);
-    const user = await this.userRepository.getByName(userName);
+    const user = this.userRepository.getByName(userName);
     return user;
   }
 }
