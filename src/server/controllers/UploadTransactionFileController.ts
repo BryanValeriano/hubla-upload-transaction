@@ -1,25 +1,28 @@
+import { Prompt } from "next/font/google";
 import Transaction from "../entities/Transaction";
 import IFileTransactionParser from "../parser/IFileTransactionParser";
 import ITransactionRepository from "../repositories/ITransactionRepository";
+import IUserRepository from "../repositories/IUserRepository";
 import CreateTransactionService from "../useCases/createTransaction/createTransactionService";
+import ProcessTransactionService from "../useCases/processTransaction/processTransactionService";
 
 type Output = Omit<Transaction, "id">
 
 type UploadTransactionFileControllerProps = {
   parser: IFileTransactionParser;
   transactionRepository: ITransactionRepository;
+  userRepository: IUserRepository;
 }
 
 export default class UploadTransactionFileController {
   private parser: IFileTransactionParser;
-  private transactionRepository: ITransactionRepository;
-  private createTransactionService: CreateTransactionService;
+  private processTransactionService: ProcessTransactionService;
 
-  constructor({ parser, transactionRepository }: UploadTransactionFileControllerProps) {
+  constructor({ parser, transactionRepository, userRepository }: UploadTransactionFileControllerProps) {
     this.parser = parser;
-    this.transactionRepository = transactionRepository;
-    this.createTransactionService = new CreateTransactionService({
-      transactionRepository: this.transactionRepository
+    this.processTransactionService = new ProcessTransactionService({
+      transactionRepository,
+      userRepository
     })
   }
 
@@ -27,7 +30,7 @@ export default class UploadTransactionFileController {
     const { transactions, errors } = this.parser.parse(file);
     if (!errors.length) {
       transactions.forEach((transaction) => {
-        this.createTransactionService.execute(transaction);
+        this.processTransactionService.execute(transaction);
       })
     }
     return { transactions, errors }
