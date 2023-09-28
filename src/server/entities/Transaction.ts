@@ -1,11 +1,13 @@
 export enum TransactionType {
-  RECEIVED_MONEY = 1 | 2 | 4,
-  PAYED_MONEY = 3,
+  ProducerSale = 1,
+  AffiliateSale = 2,
+  ComissionPaid = 3,
+  ComissionReceived = 4,
 }
 
 type TransactionConstructor = {
   id: string;
-  type: number;
+  type: TransactionType;
   date: string;
   productDescription: string;
   value: number;

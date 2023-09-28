@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import Transaction from '../entities/Transaction';
+import Transaction, { TransactionType } from '../entities/Transaction';
 import IFileTransactionParser from './IFileTransactionParser';
 
 type Output = Omit<Transaction, "id">
@@ -13,7 +13,7 @@ export default class Base64toTransactionParser implements IFileTransactionParser
       return null;
     }
 
-    const type = parseInt(line.substring(0, 1));
+    const type = parseInt(line.substring(0, 1)) as TransactionType;
     if (!(type >= 1 && type <= 4)) {
       const errorMsg = `Lin2 ${index}: Invalid transaction type. Each transaction must be a number between 1 and 4. - ${line}`;
       errors.push(errorMsg);

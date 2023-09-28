@@ -11,7 +11,7 @@ describe("Create Transaction Service", () => {
     });
 
     const transaction = createTransactionService.execute({
-      type: TransactionType.RECEIVED_MONEY,
+      type: 1,
       date: "test",
       productDescription: "test",
       value: 10,

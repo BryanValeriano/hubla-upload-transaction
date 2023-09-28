@@ -1,9 +1,10 @@
-import Transaction, { TransactionType } from "@/server/entities/Transaction";
 import ITransactionRepository from "@/server/repositories/ITransactionRepository";
 import IUserRepository from "@/server/repositories/IUserRepository";
 import CreateTransactionService from "../createTransaction/createTransactionService";
 import CreateUserService from "../createUser/createUserService";
 import UpdateUserBalanceService from "../updateUserBalance/updateUserBalanceService";
+import Transaction, { TransactionType } from "@/server/entities/Transaction";
+
 
 type Dependencies = {
   transactionRepository: ITransactionRepository;
@@ -23,10 +24,19 @@ export default class ProcessTransactionService {
     this.updateUserBalanceService = new UpdateUserBalanceService({ userRepository })
   }
 
+  public isReceivedTransaction(type: TransactionType): boolean {
+    const receivedTransactionTypes = [
+      TransactionType.ProducerSale,
+      TransactionType.AffiliateSale,
+      TransactionType.ComissionReceived
+    ];
+    return receivedTransactionTypes.includes(type);
+  }
+
   public execute(input: Input) {
     const transaction = this.createTransactionService.execute(input);
     const user = this.createUserService.execute({ userName: input.transactionOwnerName });
-    user.balance += (transaction.type == TransactionType.RECEIVED_MONEY ? 1 : -1) * transaction.value;
+    user.balance += (this.isReceivedTransaction(transaction.type) ? 1 : -1) * transaction.value;
     this.updateUserBalanceService.execute(user);
     return transaction;
   }
