@@ -14,11 +14,11 @@ export default class CreateUserService {
     this.userRepository = userRepository;
   }
 
-  async execute({ userName }: Input) {
+  async execute({ userName }: Input): Promise<User> {
     const existingUser = await this.userRepository.getByName(userName)
 
     if (existingUser) {
-      return;
+      return existingUser;
     }
 
     const user = new User({
