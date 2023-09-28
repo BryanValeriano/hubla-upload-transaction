@@ -4,18 +4,18 @@ import IUserRepository from "@/server/repositories/IUserRepository";
 type Input = Omit<User, 'balance'>
 
 type Dependencies = {
-  UserRepository: IUserRepository;
+  userRepository: IUserRepository;
 }
 
-export default class GetUsersService {
-  private UserRepository: IUserRepository;
+export default class GetUserByNameService {
+  private userRepository: IUserRepository;
 
-  constructor({ UserRepository }: Dependencies) {
-    this.UserRepository = UserRepository;
+  constructor({ userRepository }: Dependencies) {
+    this.userRepository = userRepository;
   }
 
-  async execute({ userName }: Input) {
-    const user = await this.UserRepository.getByName(userName);
+  async execute(userName: string) {
+    const user = await this.userRepository.getByName(userName);
     return user;
   }
 }
