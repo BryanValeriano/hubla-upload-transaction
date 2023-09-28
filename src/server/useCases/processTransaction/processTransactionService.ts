@@ -1,4 +1,4 @@
-import Transaction from "@/server/entities/Transaction";
+import Transaction, { TransactionType } from "@/server/entities/Transaction";
 import ITransactionRepository from "@/server/repositories/ITransactionRepository";
 import IUserRepository from "@/server/repositories/IUserRepository";
 import CreateTransactionService from "../createTransaction/createTransactionService";
@@ -11,11 +11,6 @@ type Dependencies = {
 }
 
 type Input = Omit<Transaction, 'id'>
-
-enum TransactionType {
-  RECEIVED_MONEY = 1 | 2 | 4,
-  PAYED_MONEY = 3,
-}
 
 export default class ProcessTransactionService {
   private createTransactionService: CreateTransactionService;
