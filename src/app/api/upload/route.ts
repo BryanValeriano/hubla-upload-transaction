@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const { transactionRepository } = container();
     const { userRepository } = container();
     const uploadTransactionFileController = new UploadTransactionFileController({ parser, transactionRepository, userRepository });
-    const { transactions, errors } = uploadTransactionFileController.execute(base64Content);
+    const { transactions, errors } = await uploadTransactionFileController.execute(base64Content);
 
     if (errors.length > 0) {
       return NextResponse.json({ success: false, errors }, { status: 400 });

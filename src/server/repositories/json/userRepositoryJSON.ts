@@ -19,7 +19,7 @@ export default class UserRepositoryJSON implements IUserRepository {
     })
   }
 
-  private saveToFile(users: User[]) {
+  private async saveToFile(users: User[]) {
     try {
       fs.writeFileSync(this.filePath, JSON.stringify(users));
     } catch (error) {
@@ -31,39 +31,40 @@ export default class UserRepositoryJSON implements IUserRepository {
     this.saveToFile([])
   }
 
-  public insert(user: User): void {
-    const users = this.getUsersFromFile();
+  public async insert(user: User): Promise<void> {
+    const users = await this.getUsersFromFile();
     users.push(user);
-    this.saveToFile(users);
+    await this.saveToFile(users);
   }
 
-  public updateBalance(user: User): User | void {
-    const users = this.getUsersFromFile();
+  public async updateBalance(user: User): Promise<User | void> {
+    const users = await this.getUsersFromFile();
     users.forEach((oldUser) => {
       if (oldUser.userName == user.userName) {
         oldUser.balance = user.balance;
-        return oldUser;
       }
     })
-    this.saveToFile(users);
+
+    await this.saveToFile(users);
+    return await this.getByName(user.userName);
   }
 
-  public getAll(): User[] {
-    const users = this.getUsersFromFile();
+  public async getAll(): Promise<User[]> {
+    const users = await this.getUsersFromFile();
     return [...users];
   }
 
-  public getByName(userName: string): User | undefined {
-    const users = this.getUsersFromFile();
+  public async getByName(userName: string): Promise<User | undefined> {
+    const users = await this.getUsersFromFile();
     return users.find((user) => user.userName == userName);
   }
 
-  public getUsersFromFile(): User[] {
+  public async getUsersFromFile(): Promise<User[]> {
     let users: User[] = [];
     try {
       const data = fs.readFileSync(this.filePath, 'utf8');
       if (data) {
-        users = JSON.parse(data);
+        users = await JSON.parse(data);
       } else {
         console.error(`File ${this.filePath} is empty.`);
       }

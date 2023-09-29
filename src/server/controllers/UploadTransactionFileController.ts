@@ -1,9 +1,7 @@
-import { Prompt } from "next/font/google";
 import Transaction from "../entities/Transaction";
 import IFileTransactionParser from "../parser/IFileTransactionParser";
 import ITransactionRepository from "../repositories/ITransactionRepository";
 import IUserRepository from "../repositories/IUserRepository";
-import CreateTransactionService from "../useCases/createTransaction/createTransactionService";
 import ProcessTransactionService from "../useCases/processTransaction/processTransactionService";
 
 type Output = Omit<Transaction, "id">

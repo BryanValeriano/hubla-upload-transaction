@@ -33,11 +33,11 @@ export default class ProcessTransactionService {
     return receivedTransactionTypes.includes(type);
   }
 
-  public execute(input: Input) {
-    const transaction = this.createTransactionService.execute(input);
-    const user = this.createUserService.execute({ userName: input.transactionOwnerName });
+  public async execute(input: Input): Promise<Transaction> {
+    const transaction = await this.createTransactionService.execute(input);
+    const user = await this.createUserService.execute({ userName: input.transactionOwnerName });
     user.balance += (this.isReceivedTransaction(transaction.type) ? 1 : -1) * transaction.value;
-    this.updateUserBalanceService.execute(user);
+    await this.updateUserBalanceService.execute(user);
     return transaction;
   }
 }

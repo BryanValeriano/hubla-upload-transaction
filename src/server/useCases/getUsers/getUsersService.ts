@@ -1,4 +1,5 @@
 import IUserRepository from "@/server/repositories/IUserRepository";
+import { User } from "@prisma/client";
 
 type Dependencies = {
   userRepository: IUserRepository;
@@ -11,8 +12,8 @@ export default class GetUsersService {
     this.userRepository = userRepository;
   }
 
-  public execute() {
-    const Users = this.userRepository.getAll();
-    return Users;
+  public async execute(): Promise<User[]> {
+    const users = await this.userRepository.getAll();
+    return users;
   }
 }

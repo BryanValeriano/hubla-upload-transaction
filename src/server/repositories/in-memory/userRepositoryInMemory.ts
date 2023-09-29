@@ -4,24 +4,24 @@ import IUserRepository from "../IUserRepository";
 export default class UserRepositoryInMemory implements IUserRepository {
   private users: User[] = [];
 
-  insert(User: User): void {
+  async insert(User: User): Promise<void> {
     this.users.push(User);
   }
 
-  updateBalance(user: User): User | void {
+  async updateBalance(user: User): Promise<User | void> {
     this.users.forEach((oldUser) => {
       if (oldUser.userName == user.userName) {
         oldUser.balance = user.balance;
-        return oldUser;
       }
     })
+    return await this.getByName(user.userName);
   }
 
-  getAll(): User[] {
+  async getAll(): Promise<User[]> {
     return [...this.users];
   }
 
-  getByName(userName: string): User | undefined {
+  async getByName(userName: string): Promise<User | undefined> {
     return this.users.find((user) => user.userName == userName);
   }
 }

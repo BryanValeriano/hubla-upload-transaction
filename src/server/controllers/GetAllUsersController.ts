@@ -17,7 +17,7 @@ export default class GetAllUsersController {
 
   }
 
-  public execute(): User[] {
-    return this.getUsersService.execute();
+  public async execute(): Promise<User[]> {
+    return await this.getUsersService.execute();
   }
 }

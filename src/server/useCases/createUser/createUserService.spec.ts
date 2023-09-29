@@ -9,11 +9,11 @@ describe("Create User Service", () => {
       userRepository
     });
 
-    createUserService.execute({
+    await createUserService.execute({
       userName: "teste"
     })
 
-    const user = userRepository.getByName("teste");
+    const user = await userRepository.getByName("teste");
 
     expect(user).not.toBe(undefined);
     expect(user?.userName).toBe("teste");

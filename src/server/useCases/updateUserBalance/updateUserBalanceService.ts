@@ -12,15 +12,15 @@ export default class UpdateUserBalanceService {
     this.userRepository = userRepository;
   }
 
-  public execute(user: User): User | undefined {
-    const existingUser = this.userRepository.getByName(user.userName)
+  public async execute(user: User): Promise<User | undefined> {
+    const existingUser = await this.userRepository.getByName(user.userName)
 
     if (!existingUser) {
       console.error("Error on updatng non existing user");
       return;
     }
 
-    this.userRepository.updateBalance(user);
+    await this.userRepository.updateBalance(user);
     return user;
   }
 }

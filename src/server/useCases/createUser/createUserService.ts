@@ -19,8 +19,8 @@ export default class CreateUserService {
     });
   }
 
-  public execute({ userName }: Input): User {
-    const existingUser = this.getUserByNameService.execute(userName)
+  public async execute({ userName }: Input): Promise<User> {
+    const existingUser = await this.getUserByNameService.execute(userName)
 
     if (existingUser) {
       return existingUser;

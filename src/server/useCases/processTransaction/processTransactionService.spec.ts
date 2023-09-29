@@ -34,7 +34,7 @@ describe("Process Transaction Service", () => {
       const value = Math.random();
       const transactionType = getRandomTransactionType();
 
-      processTransactionService.execute({
+      await processTransactionService.execute({
         type: transactionType,
         date: userName,
         productDescription: userName,
@@ -45,7 +45,7 @@ describe("Process Transaction Service", () => {
       balance += (processTransactionService.isReceivedTransaction(transactionType) ? 1 : -1) * value;
     }
 
-    expect((transactionRepository.getAll()).length).toBe(samples);
-    expect(getUserByNameService.execute(userName)).toEqual({ userName, balance });
+    expect((await transactionRepository.getAll()).length).toBe(samples);
+    expect(await getUserByNameService.execute(userName)).toEqual({ userName, balance });
   })
 })
