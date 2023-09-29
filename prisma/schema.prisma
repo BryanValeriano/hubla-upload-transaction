@@ -28,3 +28,10 @@ model User {
 
   @@map("users")
 }
+
+model Lock {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  locked    Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
