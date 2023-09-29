@@ -1,0 +1,5 @@
+-- init.sql
+CREATE DATABASE IF NOT EXISTS mydb;
+GRANT ALL PRIVILEGES ON mydb.* TO 'johndoe'@'%';
+GRANT CREATE, ALTER, DROP ON *.* TO 'johndoe'@'%';
+FLUSH PRIVILEGES;
