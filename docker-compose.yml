@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    build: .
+    working_dir: /app
+    command: npm run dev
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "mysql://johndoe:randompassword@db:3306/mydb"
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'mydb'
+      MYSQL_USER: 'johndoe'
+      MYSQL_PASSWORD: 'randompassword'
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mounting SQL script
+
+volumes:
+  mysqldata:
