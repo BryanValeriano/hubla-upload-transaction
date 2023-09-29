@@ -14,7 +14,7 @@ export default class CreateTransactionService {
     this.transactionRepository = transactionRepository;
   }
 
-  public execute({ type, date, productDescription, value, transactionOwnerName }: Input): Transaction {
+  public async execute({ type, date, productDescription, value, transactionOwnerName }: Input): Promise<Transaction> {
     const id = uuid()
     const transaction = new Transaction({
       id,
@@ -24,7 +24,7 @@ export default class CreateTransactionService {
       value,
       transactionOwnerName
     })
-    this.transactionRepository.insert(transaction);
+    await this.transactionRepository.insert(transaction);
     return transaction;
   }
 }

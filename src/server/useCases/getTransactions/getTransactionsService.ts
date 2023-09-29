@@ -1,4 +1,5 @@
 import ITransactionRepository from "@/server/repositories/ITransactionRepository";
+import { Transaction } from "@prisma/client";
 
 type Dependencies = {
   transactionRepository: ITransactionRepository;
@@ -11,8 +12,8 @@ export default class GetTransactionsService {
     this.transactionRepository = transactionRepository;
   }
 
-  public execute() {
-    const transactions = this.transactionRepository.getAll();
+  public async execute(): Promise<Transaction[]> {
+    const transactions = await this.transactionRepository.getAll();
     return transactions;
   }
 }

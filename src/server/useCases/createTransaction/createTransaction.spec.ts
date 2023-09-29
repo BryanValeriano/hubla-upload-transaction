@@ -1,7 +1,6 @@
 import TransactionRepositoryInMemory from "@/server/repositories/in-memory/transactionRepositoryInMemory"
 import CreateTransactionService from "./createTransactionService";
 import { describe, expect, it } from "vitest";
-import { TransactionType } from "@/server/entities/Transaction";
 
 describe("Create Transaction Service", () => {
   it("Should be able to create a new transaction", async () => {
@@ -18,6 +17,6 @@ describe("Create Transaction Service", () => {
       transactionOwnerName: "Roberto"
     })
 
-    expect((transactionRepository.getAll()).length).toBe(1);
+    expect((await transactionRepository.getAll()).length).toBe(1);
   })
 })

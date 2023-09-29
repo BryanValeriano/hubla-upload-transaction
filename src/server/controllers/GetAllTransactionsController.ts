@@ -18,6 +18,6 @@ export default class GetAllTransactionsController {
   }
 
   public async execute(): Promise<Transaction[]> {
-    return this.getTransactionsService.execute();
+    return await this.getTransactionsService.execute();
   }
 }
