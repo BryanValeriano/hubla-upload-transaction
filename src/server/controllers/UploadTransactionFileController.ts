@@ -24,12 +24,12 @@ export default class UploadTransactionFileController {
     })
   }
 
-  public execute(file: string): { transactions: Output[], errors: string[] } {
+  public async execute(file: string): Promise<{ transactions: Output[], errors: string[] }> {
     const { transactions, errors } = this.parser.parse(file);
     if (!errors.length) {
-      transactions.forEach((transaction) => {
-        this.processTransactionService.execute(transaction);
-      })
+      for (const transaction of transactions) {
+        await this.processTransactionService.execute(transaction);
+      }
     }
     return { transactions, errors }
   }

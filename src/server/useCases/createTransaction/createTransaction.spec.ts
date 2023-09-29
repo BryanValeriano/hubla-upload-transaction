@@ -9,7 +9,7 @@ describe("Create Transaction Service", () => {
       transactionRepository: transactionRepository
     });
 
-    const transaction = createTransactionService.execute({
+    const transaction = await createTransactionService.execute({
       type: 1,
       date: "test",
       productDescription: "test",

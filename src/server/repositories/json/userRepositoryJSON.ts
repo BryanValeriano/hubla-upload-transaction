@@ -1,9 +1,10 @@
 import User from "@/server/entities/User";
 import IUserRepository from "../IUserRepository";
 import fs from "fs";
-import path from "node:path";
+import path from "path"; // changed from node:path
 
 export default class UserRepositoryJSON implements IUserRepository {
+  private db: User[] = [];
   private filePath = path.join(
     'src',
     'server',
@@ -14,64 +15,56 @@ export default class UserRepositoryJSON implements IUserRepository {
   );
 
   constructor() {
-    fs.readFile(this.filePath, (error) => {
-      console.error(`Error reading the file ${this.filePath}:`, error)
-    })
+    this.getUsersFromFile();
   }
 
   private async saveToFile(users: User[]) {
-    try {
-      fs.writeFileSync(this.filePath, JSON.stringify(users));
-    } catch (error) {
-      console.error(`Error writing to file ${this.filePath}:`, error); // Log any errors during the write operation
-    }
+    this.db = users; // Update the db variable
+    fs.writeFile(this.filePath, JSON.stringify(users), (error) => {
+      if (error) console.error(`Error writing to file ${this.filePath}:`, error);
+    });
   }
 
   public clear(): void {
-    this.saveToFile([])
+    this.saveToFile([]);
   }
 
   public async insert(user: User): Promise<void> {
-    const users = await this.getUsersFromFile();
-    users.push(user);
-    await this.saveToFile(users);
+    this.db.push(user);
+    await this.saveToFile(this.db);
   }
 
   public async updateBalance(user: User): Promise<User | void> {
-    const users = await this.getUsersFromFile();
-    users.forEach((oldUser) => {
-      if (oldUser.userName == user.userName) {
-        oldUser.balance = user.balance;
-      }
-    })
-
-    await this.saveToFile(users);
-    return await this.getByName(user.userName);
+    const userIndex = this.db.findIndex(oldUser => oldUser.userName === user.userName);
+    if (userIndex !== -1) {
+      this.db[userIndex].balance = user.balance;
+      await this.saveToFile(this.db);
+    }
+    return this.getByName(user.userName);
   }
 
   public async getAll(): Promise<User[]> {
-    const users = await this.getUsersFromFile();
-    return [...users];
+    return [...this.db];
   }
 
   public async getByName(userName: string): Promise<User | undefined> {
-    const users = await this.getUsersFromFile();
-    return users.find((user) => user.userName == userName);
+    return this.db.find(user => user.userName === userName);
   }
 
   public async getUsersFromFile(): Promise<User[]> {
-    let users: User[] = [];
-    try {
-      const data = fs.readFileSync(this.filePath, 'utf8');
-      if (data) {
-        users = await JSON.parse(data);
-      } else {
-        console.error(`File ${this.filePath} is empty.`);
+    fs.readFile(this.filePath, 'utf8', (error, data) => {
+      if (error) {
+        console.error(`Error reading file ${this.filePath}:`, error);
+        return;
       }
-    } catch (error) {
-      console.error(`Error reading or parsing file ${this.filePath}:`, error);
-    }
 
-    return users.map((user) => new User({ ...user }));
+      try {
+        this.db = JSON.parse(data).map((user: User) => new User({ ...user }));
+      } catch (e) {
+        console.error('Error parsing JSON:', e);
+      }
+    });
+
+    return this.db;
   }
 }

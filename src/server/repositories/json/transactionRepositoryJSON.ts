@@ -31,7 +31,7 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
     this.saveToFile([])
   }
 
-  public insert(transaction: Transaction): void {
+  public async insert(transaction: Transaction): Promise<void> {
     const transactions = this.getTransactionsFromFile();
     transactions.push(transaction);
     this.saveToFile(transactions);

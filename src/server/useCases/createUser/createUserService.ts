@@ -31,7 +31,7 @@ export default class CreateUserService {
       userName
     })
 
-    this.userRepository.insert(user);
+    await this.userRepository.insert(user);
     return user;
   }
 }

@@ -4,7 +4,7 @@ import ITransactionRepository from "../ITransactionRepository";
 export default class TransactionRepositoryInMemory implements ITransactionRepository {
   private transactions: Transaction[] = [];
 
-  insert(transaction: Transaction): void {
+  async insert(transaction: Transaction): Promise<void> {
     this.transactions.push(transaction);
   }
 

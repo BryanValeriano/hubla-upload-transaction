@@ -15,8 +15,6 @@ async function getData() {
 }
 
 export default async function Transactions() {
-  console.log("------------------------------------");
-  console.log(process.env.NEXT_PUBLIC_URL);
   const data = await getData();
   const transactions = data.transactions;
   return <TransactionList transactions={transactions} />

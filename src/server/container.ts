@@ -10,10 +10,10 @@ interface Container {
   userRepository: IUserRepository;
 }
 
-const dev: Container = {
-  transactionRepository: new TransactionRepositoryJSON(),
-  userRepository: new UserRepositoryJSON()
-}
+//const dev: Container = {
+//  transactionRepository: new TransactionRepositoryJSON(),
+//  userRepository: new UserRepositoryJSON()
+//}
 
 const prod: Container = {
   transactionRepository: new TransactionRepositoryPrismaMySQL(),
@@ -21,11 +21,11 @@ const prod: Container = {
 }
 
 export function container(): Container {
-  const mode = process.env.MODE || 'dev'
+  const mode = process.env.MODE || 'prod'
 
   switch (mode) {
-    case 'dev':
-      return dev
+    //case 'dev':
+    //  return dev
     case 'prod':
       return prod
     default:
