@@ -2,7 +2,7 @@
 CREATE TABLE `transactions` (
     `id` VARCHAR(191) NOT NULL,
     `type` INTEGER NOT NULL,
-    `date` DATETIME(3) NOT NULL,
+    `date` VARCHAR(191) NOT NULL,
     `productDescription` VARCHAR(191) NOT NULL,
     `value` DOUBLE NOT NULL,
     `transactionOwnerName` VARCHAR(191) NOT NULL,

@@ -37,7 +37,7 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
     this.saveToFile(transactions);
   }
 
-  public getAll(): Transaction[] {
+  public async getAll(): Promise<Transaction[]> {
     return [...this.getTransactionsFromFile()];
   }
 

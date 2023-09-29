@@ -8,7 +8,7 @@ export default class TransactionRepositoryInMemory implements ITransactionReposi
     this.transactions.push(transaction);
   }
 
-  getAll(): Transaction[] {
+  async getAll(): Promise<Transaction[]> {
     return [...this.transactions];
   }
 }
