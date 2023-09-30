@@ -12,6 +12,65 @@ This project is a web interface with a dedicated area for uploading a file that 
 * Additional notes / Impovements
 
 ## Technical and architectural decisions
+The development of this application prioritizes simplicity in:
+
+- Modifying data persistence methods.
+- Altering user interface types (GUI, CLI, CUI, etc.).
+- Adding and optimizing features.
+
+The application's main components – UI, API, business rules, and database – are meticulously decoupled to realize these priorities.
+
+
+#### Change data persistency method or implementation.
+The data layer is isolated following the repository pattern. We can change the data persistence method by implementing the interfaces `ITransactionRepository` and `IUserRepository`. We use dependency injection to pass which of the implementations the application is going to use. At the moment we have three possible implementations, each one designed for different environments (test, development, and production).
+
+```
+//container.ts
+
+interface Container {
+  transactionRepository: ITransactionRepository
+  userRepository: IUserRepository;
+}
+
+const dev: Container = {
+  transactionRepository: new TransactionRepositoryJSON(),
+  userRepository: new UserRepositoryJSON()
+}
+
+const test: Container = {
+  transactionRepository: new TransactionRepositoryInMemory(),
+  userRepository: new UserRepositoryInMemory()
+}
+
+const prod: Container = {
+  transactionRepository: new TransactionRepositoryPrismaMySQL(),
+  userRepository: new UserRepositoryPrismaMySQL()
+}
+
+export function container(): Container {
+  const mode = process.env.MODE || 'prod'
+
+  switch (mode) {
+    case 'dev':
+      return dev
+    case 'prod':
+      return prod
+    case 'test':
+      return test
+    default:
+      throw new Error('Invalid mode')
+  }
+}
+```
+
+#### Change user interface
+All the business rules are located in the src/server folder. 
+We can easily choose to run the application with another interface such as CLI (Command Line Interface) or a CUI (Conversational user interface) like Chatbots, using the same core functionalities already implemented and carefully isolated.
+
+#### Add and optimize features
+As described, all the main parts of the application are isolated and independent from one another. Therefore, we can easily add and optimize features. Here are a few examples of this:
+- **Optimization**: We can minimize the database queries by performing batch queries commonly known as transactions. To implement this we can create another implementation of the repository interface.
+- **New feature**: We can add features to add, delete, and update individual transactions and users. These functionalities are called use cases on the application and to implement new ones we just need to make sure the repository interface has the methods we are going to need (if not, we can add them) for our purposes and correctly use it.
 
 ## Technologies Used
 Technologies Used
