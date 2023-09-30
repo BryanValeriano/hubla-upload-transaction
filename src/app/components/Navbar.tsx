@@ -30,18 +30,24 @@ export default function Navbar() {
 
       <div className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${hiddenMenu ? 'hidden' : ''}`}>
         <div className="text-sm lg:flex-grow">
-          <Link href="/upload" className={`block mt-4 lg:inline-block lg:mt-0 ${pathname === "/upload" ? activeLinkStyle : inactiveLinkStyle} mr-4`}>
+          <Link href="/upload" className={`block mt-4 lg:inline-block lg:mt-0 
+            ${pathname === "/upload" ? activeLinkStyle : inactiveLinkStyle} mr-4`}>
             Upload
           </Link>
-          <Link href="/users" className={`block mt-4 lg:inline-block lg:mt-0 ${pathname === "/users" ? activeLinkStyle : inactiveLinkStyle} mr-4`}>
+          <Link href="/users" className={`block mt-4 lg:inline-block lg:mt-0 
+            ${pathname === "/users" ? activeLinkStyle : inactiveLinkStyle} mr-4`}>
             Users
           </Link>
-          <Link href="/transactions" className={`block mt-4 lg:inline-block lg:mt-0 ${pathname === "/transactions" ? activeLinkStyle : inactiveLinkStyle} mr-4`}>
+          <Link href="/transactions" className={`block mt-4 lg:inline-block lg:mt-0 
+            ${pathname === "/transactions" ? activeLinkStyle : inactiveLinkStyle} mr-4`}>
             Transactions
           </Link>
         </div>
         <div>
-          <Link href="https://github.com/BryanValeriano/upload-transaction#readme" className="inline-block text-sm px-2 py-2 leading-none border rounded text-black border-black hover:border-transparent hover:text-gray-500 hover:bg-none mt-4 mr-2 lg:mt-0">
+          <Link href="https://github.com/BryanValeriano/upload-transaction#readme"
+            target="_blank"
+            className="inline-block text-sm px-2 py-2 leading-none border rounded text-black 
+            border-black hover:border-transparent hover:text-gray-500 hover:bg-none mt-4 mr-2 lg:mt-0">
             Project Documentation
           </Link>
         </div>
