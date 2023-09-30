@@ -1,7 +1,5 @@
 import ITransactionRepository from "./repositories/ITransactionRepository";
 import IUserRepository from "./repositories/IUserRepository";
-import TransactionRepositoryJSON from "./repositories/json/transactionRepositoryJSON";
-import UserRepositoryJSON from "./repositories/json/userRepositoryJSON";
 import TransactionRepositoryPrismaMySQL from "./repositories/prisma/transactionsRepositoryPrismaMySQL";
 import { UserRepositoryPrismaMySQL } from "./repositories/prisma/usersRepositoryPrismaMySQL";
 
