@@ -75,7 +75,7 @@ As described, all the main parts of the application are isolated and independent
 ## Technologies Used
 Technologies Used
 
-* [Next.js](https://nextjs.org/): For building the user interface and handling server-side rendering.
+* [Next.js](https://nextjs.org/): For building a fullstack application with high productivity.
 * [Tailwind CSS](https://tailwindcss.com): Employed for styling the application, it allows rapid development of custom user interfaces with utility-first CSS classes, reducing the need for custom CSS. 
 * [Prisma](https://www.prisma.io/): Utilized as the ORM for handling database operations, it provides a clear and concise way to define models and relationships, improving the development workflow.
 * [Vitest](https://vitest.dev/): Used for testing the application, it offers a fast and scalable testing solution, ensuring the reliability and stability of the application. It has the exact same syntax as Jest and does not need extra configuration to deal with typescript.
