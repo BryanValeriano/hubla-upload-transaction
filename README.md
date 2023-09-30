@@ -81,7 +81,7 @@ Technologies Used
 * [Docker](https://www.docker.com/): Facilitates the development, shipping, and running of applications inside containers, ensuring consistency across multiple development and deployment environments.
 
 ## Setup and Instalation
-1. **Clone the repository** (not needed if you already has the repository):
+1. **Clone the repository** (not needed if you already have the repository):
 
 ```
 git clone https://github.com/BryanValeriano/upload-transaction.git
