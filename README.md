@@ -6,7 +6,6 @@ This project is a web interface with a dedicated area for uploading a file that 
 * Technical and architectural decisions
 * Technologies Used
 * Setup and Installation
-* Usage
 * Implementation Details
 * Tests
 * Additional notes / Impovements
@@ -80,3 +79,26 @@ Technologies Used
 * [Prisma](https://www.prisma.io/): Utilized as the ORM for handling database operations, it provides a clear and concise way to define models and relationships, improving the development workflow.
 * [Vitest](https://vitest.dev/): Used for testing the application, it offers a fast and scalable testing solution, ensuring the reliability and stability of the application. It has the exact same syntax as Jest and does not need extra configuration to deal with typescript.
 * [Docker](https://www.docker.com/): Facilitates the development, shipping, and running of applications inside containers, ensuring consistency across multiple development and deployment environments.
+
+## Setup and Instalation
+1. **Clone the repository** (not needed if you already has the repository):
+
+```
+git clone https://github.com/BryanValeriano/upload-transaction.git
+cd https://github.com/BryanValeriano/upload-transaction.git
+```
+2. **Build and Run Docker Containers**:
+
+```
+docker-compose up --build
+```
+3. **Database Migrations**:
+
+```
+//TO DO
+```
+4. **Access the Application**:
+
+Open your web browser and navigate to ```http://localhost:3000``` to access the application.
+
+
