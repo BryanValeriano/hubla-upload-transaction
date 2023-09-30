@@ -14,6 +14,8 @@ export default function FileUpload() {
   const [transactions, setTransactions] = useState<Omit<Transaction, "id">[]>([]); // Substitua por seu tipo de transação real
   const [errors, setErrors] = useState<string[]>([]);
 
+  const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB in bytes
+
   const getBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -37,14 +39,24 @@ export default function FileUpload() {
     setDragging(false);
     const transferredFiles = event.dataTransfer.files;
     if (transferredFiles && transferredFiles.length > 0) {
-      setFile(transferredFiles[0]);
+      if (transferredFiles[0].size > MAX_FILE_SIZE) {
+        setErrors(["File size exceeds the allowed limit of 5MB"]);
+      } else {
+        setFile(transferredFiles[0]);
+        setErrors([]); // reset errors when a valid file is selected
+      }
     }
   };
 
   const onFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const inputFiles = event.target.files;
     if (inputFiles && inputFiles.length > 0) {
-      setFile(inputFiles[0]);
+      if (inputFiles[0].size > MAX_FILE_SIZE) {
+        setErrors(["File size exceeds the allowed limit of 1MB"]);
+      } else {
+        setFile(inputFiles[0]);
+        setErrors([]); // reset errors when a valid file is selected
+      }
     }
   };
 
