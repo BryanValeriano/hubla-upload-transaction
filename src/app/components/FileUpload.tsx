@@ -120,7 +120,7 @@ export default function FileUpload() {
         onChange={onFileChange}
       />
       {file && <p className="mt-3 text-gray-700">Selected file: {file.name}</p>}
-      <button type="submit" className="mt-3 px-4 py-2 bg-blue-500 text-white rounded">
+      <button type="submit" className="mt-3 px-4 py-2 bg-[#c7fa15] text-black rounded">
         Upload
       </button>
       <div>
