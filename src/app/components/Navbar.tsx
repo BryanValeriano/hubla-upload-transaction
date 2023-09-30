@@ -41,7 +41,7 @@ export default function Navbar() {
           </Link>
         </div>
         <div>
-          <Link href="/documentation" className="inline-block text-sm px-2 py-2 leading-none border rounded text-black border-black hover:border-transparent hover:text-gray-500 hover:bg-none mt-4 mr-2 lg:mt-0">
+          <Link href="https://github.com/BryanValeriano/upload-transaction#readme" className="inline-block text-sm px-2 py-2 leading-none border rounded text-black border-black hover:border-transparent hover:text-gray-500 hover:bg-none mt-4 mr-2 lg:mt-0">
             Project Documentation
           </Link>
         </div>
