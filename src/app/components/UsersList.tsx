@@ -6,7 +6,7 @@ interface userProps {
 
 export default function UserList({ users }: userProps) {
   return (
-    <div className="mt-4">
+    <div className="max-w-xs mx-auto mt-4" >
       <h2 className="text-2xl font-semibold mb-4">Users:</h2>
       <div className="space-y-4">
         {users.map((user, index) => (

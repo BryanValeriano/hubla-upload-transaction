@@ -6,7 +6,7 @@ interface TransactionProps {
 
 export default function TransactionList({ transactions }: TransactionProps) {
   return (
-    <div className="mt-4">
+    <div className="max-w-xs mx-auto mt-4" >
       <h2 className="text-2xl font-semibold mb-4">Transactions:</h2>
       <div className="space-y-4">
         {transactions.map((transaction, index) => (
