@@ -102,3 +102,23 @@ docker-compose up --build
 Open your web browser and navigate to ```http://localhost:3000``` to access the application.
 
 
+## Implementation Details
+![folder structure](public/folder_structure.png)
+
+The four main components of the application are:
+- **API**: located on `src/app/api`
+- **UI**: located on `src/app/`
+- **Business logic**: located on `src/server/`
+- **Data layer**: located on `src/server/repository`
+
+Each API route endpoint calls one of the controllers.
+- `POST` `/upload` calls `UploadTransactionFileController`
+- `GET` `/transactions` calls `GetAllTransactionsController`
+- `GET` `/users` calls `GetAllUsersController`
+
+#### Transaction processing flow
+1. Controllers receive references to repositories through dependency injection from API handlers and then call use cases.
+2. `UploadTransactionFileController`, in special, receives from the API a base64 with all the transactions and calls the parser in `src/server/parser/base64toTransactionParser`.
+3. After receiving the return from the parser, the controller checks if there are any errors and decides to return the error for the API or, in case there are no errors, process the transactions and return them instead.
+4. To process the transaction the controllers calls the use case `ProcessTransactionService`.
+5. `Process Transaction Service` has the main business rule logic related to how to update users' balances.
