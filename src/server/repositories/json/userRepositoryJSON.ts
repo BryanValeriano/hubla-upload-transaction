@@ -18,27 +18,27 @@ export default class UserRepositoryJSON implements IUserRepository {
     this.getUsersFromFile();
   }
 
-  private async saveToFile(users: User[]) {
-    this.db = users; // Update the db variable
-    fs.writeFile(this.filePath, JSON.stringify(users), (error) => {
+  private async saveToFile() {
+    fs.writeFile(this.filePath, JSON.stringify(this.db), (error) => {
       if (error) console.error(`Error writing to file ${this.filePath}:`, error);
     });
   }
 
   public clear(): void {
-    this.saveToFile([]);
+    this.db = [];
+    this.saveToFile();
   }
 
   public async insert(user: User): Promise<void> {
     this.db.push(user);
-    await this.saveToFile(this.db);
+    await this.saveToFile();
   }
 
   public async updateBalance(user: User): Promise<User | void> {
     const userIndex = this.db.findIndex(oldUser => oldUser.userName === user.userName);
     if (userIndex !== -1) {
       this.db[userIndex].balance = user.balance;
-      await this.saveToFile(this.db);
+      await this.saveToFile();
     }
     return this.getByName(user.userName);
   }
@@ -55,16 +55,14 @@ export default class UserRepositoryJSON implements IUserRepository {
     fs.readFile(this.filePath, 'utf8', (error, data) => {
       if (error) {
         console.error(`Error reading file ${this.filePath}:`, error);
-        return;
+        return [];
       }
-
       try {
         this.db = JSON.parse(data).map((user: User) => new User({ ...user }));
       } catch (e) {
         console.error('Error parsing JSON:', e);
       }
     });
-
     return this.db;
   }
 }
