@@ -4,6 +4,7 @@ import UserRepositoryInMemory from "@/server/repositories/in-memory/userReposito
 import GetUserByNameService from "../getUserByName/getUserByNameService";
 import ProcessTransactionService from "./processTransactionService";
 import { TransactionType } from "@/server/entities/Transaction";
+import { container } from "@/server/container";
 
 function getRandomTransactionType(): TransactionType {
   const keys = Object.keys(TransactionType);
@@ -14,8 +15,8 @@ function getRandomTransactionType(): TransactionType {
 
 describe("Process Transaction Service", () => {
   it("Should be able to process correctly 10 random transactions for the same user", async () => {
-    const transactionRepository = new TransactionRepositoryInMemory();
-    const userRepository = new UserRepositoryInMemory();
+    const { transactionRepository } = container();
+    const { userRepository } = container();
 
     const processTransactionService = new ProcessTransactionService({
       transactionRepository,

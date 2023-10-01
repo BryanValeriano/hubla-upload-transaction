@@ -1,12 +1,12 @@
-import UserRepositoryInMemory from "@/server/repositories/in-memory/userRepositoryInMemory"
 import { describe, expect, it } from "vitest";
 import CreateUserService from "../createUser/createUserService";
 import UpdateUserBalanceService from "./updateUserBalanceService";
 import GetUsersService from "../getUserByName/getUserByNameService";
+import { container } from "@/server/container";
 
 describe("Update User Balance Service", () => {
   it("Should be able to update existing user balance", async () => {
-    const userRepository = new UserRepositoryInMemory();
+    const { userRepository } = container();
 
     const createUserService = new CreateUserService({
       userRepository

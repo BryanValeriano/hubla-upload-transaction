@@ -1,10 +1,10 @@
-import TransactionRepositoryInMemory from "@/server/repositories/in-memory/transactionRepositoryInMemory"
 import CreateTransactionService from "./createTransactionService";
 import { describe, expect, it } from "vitest";
+import { container } from "@/server/container";
 
 describe("Create Transaction Service", () => {
   it("Should be able to create a new transaction", async () => {
-    const transactionRepository = new TransactionRepositoryInMemory();
+    const { transactionRepository } = container();
     const createTransactionService = new CreateTransactionService({
       transactionRepository: transactionRepository
     });

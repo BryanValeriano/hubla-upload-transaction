@@ -28,7 +28,8 @@ const prod: Container = {
 }
 
 export function container(): Container {
-  const mode = process.env.MODE || 'prod'
+  const mode = process.env.MODE || 'dev'
+  console.log(mode);
 
   switch (mode) {
     case 'dev':
