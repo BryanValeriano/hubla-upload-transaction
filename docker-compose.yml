@@ -11,6 +11,13 @@ services:
     environment:
       DATABASE_URL: "mysql://johndoe:randompassword@db:3306/mydb"
 
+  test:
+    build: .
+    working_dir: /app
+    command: npm run test
+    depends_on:
+      - app
+
   db:
     image: mysql:5.7
     environment:
