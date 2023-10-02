@@ -3,7 +3,7 @@ import User from "@/server/entities/User";
 import { useState, useEffect } from 'react';
 
 interface userProps {
-  users: Omit<User, "id">[];
+  users: User[];
 }
 
 export default function UserList({ users }: userProps) {
