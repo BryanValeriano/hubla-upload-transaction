@@ -27,8 +27,8 @@ export default class TransactionRepositoryJSON implements ITransactionRepository
     }
   }
 
-  clear(): void {
-    this.saveToFile([])
+  public async clear(): Promise<void> {
+    await this.saveToFile([])
   }
 
   public async insert(transaction: Transaction): Promise<void> {

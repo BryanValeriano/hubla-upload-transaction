@@ -24,4 +24,8 @@ export default class UserRepositoryInMemory implements IUserRepository {
   async getByName(userName: string): Promise<User | undefined> {
     return this.users.find((user) => user.userName == userName);
   }
+
+  public async clear(): Promise<void> {
+    this.users = [];
+  }
 }

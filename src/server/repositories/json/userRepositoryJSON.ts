@@ -24,7 +24,7 @@ export default class UserRepositoryJSON implements IUserRepository {
     });
   }
 
-  public clear(): void {
+  public async clear(): Promise<void> {
     this.db = [];
     this.saveToFile();
   }

@@ -42,4 +42,8 @@ export default class TransactionRepositoryPrisma implements ITransactionReposito
       return [];
     }
   }
+
+  public async clear(): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
 }

@@ -11,4 +11,8 @@ export default class TransactionRepositoryInMemory implements ITransactionReposi
   async getAll(): Promise<Transaction[]> {
     return [...this.transactions];
   }
+
+  public async clear(): Promise<void> {
+    this.transactions = [];
+  }
 }

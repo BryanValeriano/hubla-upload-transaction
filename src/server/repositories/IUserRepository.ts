@@ -5,5 +5,6 @@ export default interface IUserRepository {
   getByName(userName: string): Promise<User | undefined>
   getAll(): Promise<User[]>
   updateBalance(user: User): Promise<User | void>
+  clear(): Promise<void>
 }
 
