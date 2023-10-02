@@ -99,10 +99,9 @@ docker-compose up --build
 ```
 
 3. **Access the Application**:
+Open your web browser and navigate to ```http://localhost:3000``` to access the application.
 
-4. Open your web browser and navigate to ```http://localhost:3000``` to access the application.
-
-5. **Profit.**
+4. **Profit**.
 
 
 ## Implementation Details
