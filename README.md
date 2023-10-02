@@ -16,7 +16,6 @@ The development of this application prioritizes simplicity in:
 - Creating tests
 - Code maintenance
 - Modifying data persistence methods.
-- Altering user interface types (GUI, CLI, CUI, etc.).
 - Adding and optimizing features.
 
 To realize these goals, meticulous attention has been paid to decouple the principal components of the application: UI, API, Business Rules, and Database, adhering to the Single Responsibility Principle to foster ease in testing and maintenance.
@@ -66,10 +65,6 @@ export function container(): Container {
   }
 }
 ```
-
-#### Change user interface
-All the business rules are located in the src/server folder. 
-We can easily choose to run the application with another interface such as CLI (Command Line Interface) or a CUI (Conversational user interface) like Chatbots, using the same core functionalities already implemented and carefully isolated.
 
 #### Add and optimize features
 As described, all the main parts of the application are isolated and independent from one another. Therefore, we can easily add and optimize features. Here are a few examples of this:
