@@ -122,3 +122,16 @@ Each API route endpoint calls one of the controllers.
 3. After receiving the return from the parser, the controller checks if there are any errors and decides to return the error for the API or, in case there are no errors, process the transactions and return them instead.
 4. To process the transaction the controllers calls the use case `ProcessTransactionService`.
 5. `Process Transaction Service` has the main business rule logic related to how to update users' balances.
+
+## Test
+To run all tests
+```
+docker compose --profile test run --rm test
+```
+
+## Additional notes / Impovements
+Some opportunities for improvement were noted during development:
+- We can use pagination and profit from all its benefits when rendering transactions and users on the screen.
+- We can perform batch queries on the database.
+- We can add features to add/delete/update transactions individually.
+
