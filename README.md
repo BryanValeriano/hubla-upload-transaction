@@ -97,14 +97,12 @@ cd https://github.com/BryanValeriano/upload-transaction.git
 ```
 docker-compose up --build
 ```
-3. **Database Migrations**:
 
-```
-//TO DO
-```
-4. **Access the Application**:
+3. **Access the Application**:
 
-Open your web browser and navigate to ```http://localhost:3000``` to access the application.
+4. Open your web browser and navigate to ```http://localhost:3000``` to access the application.
+
+5. **Profit.**
 
 
 ## Implementation Details
