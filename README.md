@@ -13,11 +13,16 @@ This project is a web interface with a dedicated area for uploading a file that 
 ## Technical and architectural decisions
 The development of this application prioritizes simplicity in:
 
+- Creating tests
+- Code maintenance
 - Modifying data persistence methods.
 - Altering user interface types (GUI, CLI, CUI, etc.).
 - Adding and optimizing features.
 
-The application's main components – UI, API, business rules, and database – are meticulously decoupled to realize these priorities.
+To realize these goals, meticulous attention has been paid to decouple the principal components of the application: UI, API, Business Rules, and Database, adhering to the Single Responsibility Principle to foster ease in testing and maintenance.
+
+#### Creating Tests and Code Maintenance
+The adherence to the Single Responsibility Principle and the emphasis on decoupling have been pivotal in ensuring that each class and module has one reason to change, thereby promoting a high degree of maintainability and testability. This approach has facilitated the uncomplicated creation of tests and has streamlined the process of maintaining and extending the codebase.
 
 
 #### Change data persistency method or implementation.
