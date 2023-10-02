@@ -20,7 +20,11 @@ export default function FileUpload() {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
+      reader.onload = () => {
+        const result = reader.result as string;
+        const base64Content = result.split(',')[1]; // Extracting raw Base64 content
+        resolve(base64Content);
+      };
       reader.onerror = (error) => reject(error);
     });
   };

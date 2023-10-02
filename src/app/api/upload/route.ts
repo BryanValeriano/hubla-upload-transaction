@@ -13,16 +13,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'File not provided' }, { status: 400 });
     }
 
-    const base64Content = base64File.split(',')[1];
-    if (!base64Content) {
-      return NextResponse.json({ success: false, error: 'Invalid file format' }, { status: 400 });
-    }
-
     const parser = new Base64toTransactionParser() as IFileTransactionParser;
     const { transactionRepository } = container();
     const { userRepository } = container();
     const uploadTransactionFileController = new UploadTransactionFileController({ parser, transactionRepository, userRepository });
-    const { transactions, errors } = await uploadTransactionFileController.execute(base64Content);
+    const { transactions, errors } = await uploadTransactionFileController.execute(base64File);
 
     if (errors.length > 0) {
       return NextResponse.json({ success: false, errors }, { status: 400 });
