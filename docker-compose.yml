@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
   app:
     build: .
@@ -10,6 +10,7 @@ services:
       - db
     environment:
       DATABASE_URL: "mysql://johndoe:randompassword@db:3306/mydb"
+      MODE: "prod"
 
   test:
     build: .
@@ -17,6 +18,8 @@ services:
     command: npm run test
     depends_on:
       - app
+    profiles:
+      - test
 
   db:
     image: mysql:5.7
