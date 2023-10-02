@@ -1,6 +1,4 @@
-import TransactionRepositoryInMemory from "@/server/repositories/in-memory/transactionRepositoryInMemory"
 import { describe, expect, it } from "vitest";
-import UserRepositoryInMemory from "@/server/repositories/in-memory/userRepositoryInMemory";
 import GetUserByNameService from "../getUserByName/getUserByNameService";
 import ProcessTransactionService from "./processTransactionService";
 import { TransactionType } from "@/server/entities/Transaction";
